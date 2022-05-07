@@ -1,0 +1,28 @@
+package com.company;
+import java.io.*;
+import java.io.IOException;
+
+
+public class Main {
+    public static void main(String[] args){
+        try(FileReader fileReader = new FileReader("WithComments.txt");
+            FileWriter fileWriter = new FileWriter("WithoutComments.txt");){
+
+            int counter = 0;
+            String total = "";
+            while((counter = fileReader.read()) != -1){
+                total += (char)counter; //преобразование строкового типа и присваивание символов
+            }
+
+            String one = total.replaceAll("\\//.+", "");
+            String two = one.replaceAll("\\/\\*([\\S\\s]+)\\*\\/", "");
+
+            fileWriter.write(two);
+            fileWriter.flush();
+        }
+        catch(IOException ex){
+            System.out.println(ex.getMessage());
+        }
+        System.out.println((char) 27 + "[35mCreated a new text document " + (char)27 + "[0m");
+    }
+}
